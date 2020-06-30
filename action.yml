@@ -1,0 +1,26 @@
+name: 'PagerDuty Event'
+description: 'Send Event to PagerDuty'
+inputs:
+  routing_key:
+    description: 'PagerDuty routing key'
+    required: true
+  dedup_key:
+    description: 'Deduplication key for PagerDuty Event'
+    required: true
+  summary:
+    description: 'Summary of event'
+    required: true
+  source:
+    description: 'Source of the event'
+    default: 'Github Action'
+  custom_details:
+    description: 'JSON string with custom details (to be used for rules inside PagerDuty)'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.routing_key }}
+    - ${{ inputs.dedup_key }}
+    - ${{ inputs.summary }}
+    - ${{ inputs.source }}
+    - ${{ inputs.custom_details }}
